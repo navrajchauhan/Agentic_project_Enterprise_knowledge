@@ -1,0 +1,37 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "enterprise-rag-agent"
+version = "1.0.0"
+description = "Enterprise document QA agent: hybrid RAG, MCP tools, LangGraph workflows, guardrails and LLM evaluation"
+requires-python = ">=3.11"
+readme = "README.md"
+
+# `pip install -r requirements.txt` is the supported install path; the package
+# metadata below exists so the `src/` layout resolves cleanly for tooling.
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.pytest.ini_options]
+# Tests import the package from src/ without an editable install.
+pythonpath = ["src"]
+testpaths = ["tests"]
+addopts = "-ra --strict-markers"
+markers = [
+    "offline: runs without a Groq API key (deterministic test double)",
+    "live: needs GROQ_API_KEY and network access",
+    "mcp: spawns the MCP server subprocess (set RUN_MCP_TESTS=1)",
+]
+
+[tool.ruff]
+line-length = 100
+target-version = "py311"
+src = ["src", "tests"]
+
+[tool.ruff.lint]
+# Readable, pragmatic rule set for an application codebase.
+select = ["E", "F", "W", "I", "UP", "B", "C4", "SIM"]
+ignore = ["B008"]  # FastAPI/pydantic-style default calls are fine here

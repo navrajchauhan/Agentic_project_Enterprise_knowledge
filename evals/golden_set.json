@@ -1,0 +1,131 @@
+{
+  "version": 1,
+  "description": "Golden evaluation set for the enterprise RAG agent. Retrieval cases name the documents that contain the answer; answer_keywords are facts that must appear in a correct answer; the final case must produce an abstention because no document covers it. Tool cases check that the agent picks the right action.",
+  "cases": [
+    {
+      "id": "hr-annual-leave",
+      "question": "How many days of annual leave do employees get and how many days can be carried over?",
+      "kind": "retrieval",
+      "relevant_docs": ["hr_policy"],
+      "answer_keywords": ["24", "5", "31 March"],
+      "notes": "Two numbers plus a deadline: tests multi-fact retrieval inside one section."
+    },
+    {
+      "id": "hr-parental-leave",
+      "question": "How many weeks of parental leave does the primary caregiver receive?",
+      "kind": "retrieval",
+      "relevant_docs": ["hr_policy"],
+      "answer_keywords": ["26"]
+    },
+    {
+      "id": "hr-notice-period",
+      "question": "What is the notice period for a people manager?",
+      "kind": "retrieval",
+      "relevant_docs": ["hr_policy"],
+      "answer_keywords": ["90"]
+    },
+    {
+      "id": "it-password-rules",
+      "question": "What are the minimum password length and the password rotation interval?",
+      "kind": "retrieval",
+      "relevant_docs": ["it_security_policy"],
+      "answer_keywords": ["14", "90"]
+    },
+    {
+      "id": "it-incident-reporting",
+      "question": "Where and how quickly must a suspected security incident be reported?",
+      "kind": "retrieval",
+      "relevant_docs": ["it_security_policy"],
+      "answer_keywords": ["security@company.example", "1 hour"]
+    },
+    {
+      "id": "it-usb-devices",
+      "question": "What is the policy on using USB storage devices?",
+      "kind": "retrieval",
+      "relevant_docs": ["it_security_policy"],
+      "answer_keywords": ["blocked", "approval"]
+    },
+    {
+      "id": "travel-hotel-caps",
+      "question": "What are the hotel caps for domestic and international travel?",
+      "kind": "retrieval",
+      "relevant_docs": ["travel_expense_policy"],
+      "answer_keywords": ["180", "250"]
+    },
+    {
+      "id": "travel-approval-threshold",
+      "question": "What approval is required for an expense above 5,000 USD?",
+      "kind": "retrieval",
+      "relevant_docs": ["travel_expense_policy"],
+      "answer_keywords": ["VP"]
+    },
+    {
+      "id": "travel-receipts",
+      "question": "When are itemised receipts required, and how long do I have to submit an expense report?",
+      "kind": "retrieval",
+      "relevant_docs": ["travel_expense_policy"],
+      "answer_keywords": ["25", "30 days"]
+    },
+    {
+      "id": "sla-p1-targets",
+      "question": "What is the first response time and the resolution target for a P1 incident?",
+      "kind": "retrieval",
+      "relevant_docs": ["product_sla"],
+      "answer_keywords": ["15 minutes", "4 hours"]
+    },
+    {
+      "id": "sla-support-hours",
+      "question": "What are the support hours for P3 tickets?",
+      "kind": "retrieval",
+      "relevant_docs": ["product_sla"],
+      "answer_keywords": ["09:00", "18:00"]
+    },
+    {
+      "id": "retention-logs",
+      "question": "How long are application logs and security logs retained?",
+      "kind": "retrieval",
+      "relevant_docs": ["data_retention_policy"],
+      "answer_keywords": ["90 days", "13 months"]
+    },
+    {
+      "id": "retention-residency",
+      "question": "Where is EU customer data stored?",
+      "kind": "retrieval",
+      "relevant_docs": ["data_retention_policy"],
+      "answer_keywords": ["Frankfurt"]
+    },
+    {
+      "id": "unanswerable-equity",
+      "question": "What is the stock option vesting schedule and the cliff period?",
+      "kind": "retrieval",
+      "relevant_docs": [],
+      "answer_keywords": [],
+      "should_abstain": true,
+      "notes": "No document covers equity. The right behaviour is an abstention, not a guess."
+    },
+    {
+      "id": "tool-create-ticket",
+      "question": "Create a P2 support ticket: the checkout API is failing for EU customers.",
+      "kind": "tool",
+      "relevant_docs": [],
+      "answer_keywords": [],
+      "expect_tool": "create_support_ticket"
+    },
+    {
+      "id": "tool-submit-expense",
+      "question": "Submit a 250 USD taxi expense with receipts attached for travel to the customer site.",
+      "kind": "tool",
+      "relevant_docs": [],
+      "answer_keywords": [],
+      "expect_tool": "submit_expense_report"
+    },
+    {
+      "id": "tool-directory-lookup",
+      "question": "Who is the VP of Engineering?",
+      "kind": "tool",
+      "relevant_docs": [],
+      "answer_keywords": [],
+      "expect_tool": "lookup_employee"
+    }
+  ]
+}

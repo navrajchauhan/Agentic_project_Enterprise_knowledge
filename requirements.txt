@@ -1,0 +1,57 @@
+# =============================================================================
+# Runtime dependencies for the Enterprise RAG Agent
+# -----------------------------------------------------------------------------
+# Install with:
+#     python -m venv .venv
+#     .venv\Scripts\activate            (Windows)  |  source .venv/bin/activate
+#     pip install -r requirements.txt
+#
+# Python 3.11 - 3.13 (developed and tested on 3.13).
+#
+# Strategy: the packages this project imports directly are pinned to the exact
+# versions it was built against, because an AI stack moves fast and a silent
+# minor bump in `langchain-core` or `mcp` changes behaviour.  The transitive
+# tree is left to the resolver - hand-pinning it is how requirements files end
+# up with a missing entry that only fails on someone else's machine.
+#
+# For a fully reproducible CI install, freeze after one successful install:
+#     pip freeze > requirements.lock.txt
+# =============================================================================
+
+# --- Agent orchestration -----------------------------------------------------
+# LangGraph: stateful graph, per-thread checkpointing, typed state channels.
+# langchain-core comes with it and provides the message/tool-calling types.
+langgraph==1.2.16
+langchain-core==1.6.12
+
+# --- LLM provider (Groq) -----------------------------------------------------
+# langchain-groq wraps Groq's chat-completions API as a LangChain chat model;
+# `groq` is the underlying SDK, used directly by the judge/evaluation helpers.
+langchain-groq==1.1.3
+groq==1.7.0
+
+# --- MCP (Model Context Protocol) -------------------------------------------
+# Official Python SDK: MCPServer/FastMCP on the server side plus the stdio client
+# transport used to expose the enterprise actions to the agent.
+# NOTE: mcp 2.x renamed FastMCP -> MCPServer; `mcp/server.py` supports both, so
+# `mcp>=1.0,<3` is fine if you need to move off the pinned version.
+mcp==2.3.0
+
+# --- Configuration, validation, structured output ----------------------------
+pydantic==2.14.1
+pydantic-settings==2.16.0
+python-dotenv==1.2.4
+
+# --- Retrieval numerics ------------------------------------------------------
+# Dense vectors, cosine similarity and the persisted index are plain NumPy:
+# no external vector database or embedding service is required to run this.
+numpy==2.5.4
+
+# --- Transitive pins that change behaviour ----------------------------------
+# Pinned because a bump here can alter routing/checkpoint/tool semantics.
+langgraph-checkpoint==4.3.0
+langgraph-prebuilt==1.1.1
+langgraph-sdk==0.4.8
+langchain-protocol==0.0.19
+langsmith==0.14.11
+mcp-types==2.3.0

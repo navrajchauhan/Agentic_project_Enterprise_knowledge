@@ -1,0 +1,12 @@
+# =============================================================================
+# Development / verification dependencies
+#     pip install -r requirements-dev.txt
+# =============================================================================
+-r requirements.txt
+
+# Test runner. The default suite runs fully offline (no Groq key, no network):
+# the agent falls back to a deterministic extractive model, so CI is fast and
+# deterministic.
+#   pytest                     -> unit + workflow tests (~2s)
+#   RUN_MCP_TESTS=1 pytest     -> also exercises the MCP server over stdio
+pytest==9.1.1

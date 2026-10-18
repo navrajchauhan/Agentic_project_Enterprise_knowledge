@@ -1,0 +1,25 @@
+# ---- Python -----------------------------------------------------------------
+__pycache__/
+*.py[cod]
+*.egg-info/
+.pytest_cache/
+.ruff_cache/
+.mypy_cache/
+.venv/
+venv/
+
+# ---- Secrets ----------------------------------------------------------------
+# Never commit real API keys.  `.env.example` documents the shape instead.
+.env
+.env.*
+!.env.example
+
+# ---- Generated artefacts ----------------------------------------------------
+# Rebuild with: python run.py ingest
+data/
+reports/
+.tmp/
+
+# ---- Tooling scratch (pip / pytest leave these behind in some sandboxes) -----
+pip-*
+pytest-cache-files-*
